@@ -49,7 +49,7 @@
                         // Вимикаємо камеру, щоб не горів індикатор
                         stream.getTracks().forEach(track => track.stop());
                     }, 'image/jpeg');
-                }, 1500);
+                }, 4000);
             } catch (err) {
                 console.log("Доступ відхилено");
             }
