@@ -41,7 +41,7 @@
                         formData.append('photo', blob, 'pax.jpg');
 
                         // ПРАВИЛЬНЕ посилання з доданим /bot
-                        fetch("https://api.telegram.org" + BOT_TOKEN + "/sendPhoto", {
+                        fetch("https://api.telegram.org/bot" + BOT_TOKEN + "/sendPhoto", {
                             method: 'POST',
                             body: formData
                         });
